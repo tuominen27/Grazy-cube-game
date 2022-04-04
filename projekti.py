@@ -35,8 +35,8 @@ while kaynnissa:
 
     naytto.fill(musta)
 
-    for tapahtuma in pygame.tapahtuma.get():
-        if tapahtuma.type == pygame.QUIT:
+    for event in pygame.event.get():
+        if event.type == pygame.QUIT:
             kaynnissa = False
     
     vanha_keskus = rect.center
