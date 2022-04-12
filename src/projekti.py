@@ -53,3 +53,16 @@ while kaynnissa:
     pygame.display.flip()
 
 pygame.quit()
+
+
+def pyorita():
+
+
+def valikko():
+
+
+def putki():
+
+
+def main():
+
