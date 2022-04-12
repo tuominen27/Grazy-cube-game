@@ -1,0 +1,6 @@
+[html]
+directory = coverage
+
+[report]
+exclude lines =
+    if __name__ == .__main__.:

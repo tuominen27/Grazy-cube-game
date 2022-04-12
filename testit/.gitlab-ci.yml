@@ -3,7 +3,13 @@ stages:
 
 unit-test:
     stage: test
-    image: Python:3.9
-    script: 
-        -pip install pytest
-        -pip install pygame
+    image: Python:latest
+
+    script:
+        -pip install coverage
+        -coverage run -m unittest discover
+    
+    artifacts:
+        paths:
+            -coverage
+        expire_in: 14 days
