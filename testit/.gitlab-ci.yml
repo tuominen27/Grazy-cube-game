@@ -6,8 +6,8 @@ unit-test:
     image: Python:latest
 
     script:
-        -pip install pytest pytest-cov
-        -python -m pytest --cov-report=html --cov=src .
+        - pip install pytest pytest-cov
+        - python -m pytest --cov-report=html --cov=src .
     
     artifacts:
         paths:
