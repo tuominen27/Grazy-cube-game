@@ -3,12 +3,12 @@ stages:
 
 unit-test:
     stage: test
-    image: Python:latest
+    image: python:latest
 
     script:
         - pip install pytest pytest-cov
         - python -m pytest --cov-report=html --cov=src .
-    
+        
     artifacts:
         paths:
             - coverage
