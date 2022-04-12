@@ -66,3 +66,6 @@ def putki():
 
 def main():
     pass
+
+def pisteet():
+    pass
