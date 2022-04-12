@@ -56,13 +56,13 @@ pygame.quit()
 
 
 def pyorita():
-
+    pass
 
 def valikko():
-
+    pass
 
 def putki():
-
+    pass
 
 def main():
-
+    pass
