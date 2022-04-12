@@ -3,7 +3,7 @@ stages:
 
 unit-test:
     stage: test
-    image: Python:3.9
+    image: Python:latest
 
     script:
         -pip install pytest pytest-cov
