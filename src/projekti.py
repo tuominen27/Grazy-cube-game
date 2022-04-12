@@ -66,3 +66,10 @@ def putki():
 
 def main():
     pass
+
+def pisteet():
+    pass
+
+
+if __name__ == "__main__":
+    main()

@@ -1,0 +1,16 @@
+stages:
+    - test
+
+unit-test:
+    stage: test
+    image: python:latest
+    
+    script:
+        - pip install pytest pytest-cov
+        - pip install pygame
+        - python -m pytest --cov-report=html --cov=src .
+
+    artifacts:
+        paths:
+            - coverage
+        expire_in: 30 days
