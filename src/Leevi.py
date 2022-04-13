@@ -2,13 +2,15 @@ import pygame
 import os
 
 #määritellään värit
+valkoinen=(255, 255, 255)
 musta = (0, 0, 0)
 vihrea = (0, 255, 0)
 harmaa=(50, 50, 50) 
 punainen=(255, 0, 0) 
 vihrea=(0, 255, 0) 
 sininen=(0, 0, 255) 
-keltainen=(255, 255, 0) 
+keltainen=(255, 255, 0)
+HOVER_COLOR = (50, 70, 90)
 
 #pelin ikkunan koko ja perus muuttujat
 LEVEYS, KORKEUS = 800, 800
@@ -60,8 +62,6 @@ Putki4 = pygame.transform.rotate(Putki4, -135)
 
 Putki_pun=pygame.image.load(os.path.join("kuvat", "Punainen_putki.png"))
 
-
-
 def piirrokset(Tausta, Putki1, Putki2, Putki3, Putki4, Kolmio_vihr, Kolmio_pun, Kolmio_lila, Kolmio_sin,):
       naytto.blit(Tausta,(0,0))
       naytto.blit(Putki1,(650, 650))
@@ -74,11 +74,61 @@ def piirrokset(Tausta, Putki1, Putki2, Putki3, Putki4, Kolmio_vihr, Kolmio_pun, 
       naytto.blit(Kolmio_lila,(409,383))
       pygame.display.update()
 
-def pyorita():
-    pass
+#aloitus sivun koodit
+FONT = pygame.font.SysFont ("freesansbold.ttf", 60)
+FONT2 = pygame.font.SysFont ("freesansbold.ttf", 100,)
+OTSIKKO=FONT2.render("      Pelin nimi", True, sininen)
+START = FONT.render("START", True, valkoinen)
+LEADERBOARD = FONT.render("LEADERBOARD", True, valkoinen)
+QUIT = FONT.render("QUIT", True, valkoinen)
+rect_otsikko=pygame.Rect(130,100,600,60)
+rect1 = pygame.Rect(248,300,325,80)
+rect2 = pygame.Rect(248,400,325,80)
+rect3 = pygame.Rect(248,500,325,80)
+nappaimet = [
+    [START, rect1, musta],
+    [LEADERBOARD, rect2, musta],
+    [QUIT, rect3, musta],]
 
-def valikko():
-    pass
+def valikko(muoto, score_arvo):
+    while True:
+        for event in pygame.event.get():
+            if event.type == pygame.QUIT:
+                return
+            elif event.type == pygame.MOUSEMOTION:
+                for nappain in nappaimet:
+                    if nappain[1].collidepoint(event.pos):
+                        nappain[2] = HOVER_COLOR
+                    else:
+                        nappain[2] = musta
+            if event.type == pygame.MOUSEBUTTONUP:
+                pos = pygame.mouse.get_pos()
+
+                if rect1.collidepoint(pos):
+                    main()
+                if rect2.collidepoint(pos):
+                    print("Eipä ollutkaan")
+                if rect3.collidepoint(pos):
+                    pygame.quit()
+
+        naytto.fill((vihrea))
+
+        for teksti, rect, vari in nappaimet:
+            pygame.draw.rect(naytto, vari, rect)
+            naytto.blit(teksti, rect)
+        if muoto=="aloitus":
+           naytto.blit(OTSIKKO,rect_otsikko)
+        if muoto=="menu":
+           SCORE=FONT2.render("YOUR SCORE: "+ str(score_arvo),True, keltainen)
+           naytto.blit(SCORE,rect_otsikko)
+
+        pygame.display.flip()
+        kello.tick(15)
+
+def nayta_score(x,y,score_arvo):
+   score=font.render("Score: "+ str(score_arvo),True, (255,255,255))
+   naytto.blit(score,(x,y))
+   pygame.display.update()
 
 def putki():
     pass
@@ -93,5 +143,8 @@ def main():
             kaynnissa=False
       piirrokset(Tausta, Putki1, Putki2, Putki3, Putki4, Kolmio_vihr, Kolmio_pun, Kolmio_lila, Kolmio_sin,)
       pygame.display.update()
+      #if kusee pelin niin valikko("menu",score_arvo)
+
+valikko("aloitus", 0)
 main()
 pygame.quit()
