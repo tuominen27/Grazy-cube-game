@@ -30,36 +30,48 @@ Pallo_lila=pygame.image.load(os.path.join("kuvat", "lila_pallo.png"))
 Pallo_pun=pygame.image.load(os.path.join("kuvat", "punanen_pallo.png"))
 
 Kolmio_vihr=pygame.image.load(os.path.join("kuvat", "vihree.png"))
+Kolmio_vihr=pygame.transform.scale(Kolmio_vihr, (110,110))
+
 Kolmio_sin=pygame.image.load(os.path.join("kuvat", "sininen.png"))
+Kolmio_sin=pygame.transform.scale(Kolmio_sin, (110,110))
+
 Kolmio_lila=pygame.image.load(os.path.join("kuvat", "lila.png"))
-Kolmio_pun=pygame.image.load(os.path.join("kuvat", "punanen_pallo.png"))
+Kolmio_lila=pygame.transform.scale(Kolmio_lila, (110,110))
+
+Kolmio_pun=pygame.image.load(os.path.join("kuvat", "punanen.png"))
+Kolmio_pun=pygame.transform.scale(Kolmio_pun, (110,110))
 
  
 Putki1=pygame.image.load(os.path.join("kuvat", "putki.png"))
-Putki1=pygame.transform.scale(Putki1, (600,600))
+Putki1=pygame.transform.scale(Putki1, (100,300))
 Putki1 = pygame.transform.rotate(Putki1, 45)
 
 Putki2=pygame.image.load(os.path.join("kuvat", "putki.png"))
-Putki2=pygame.transform.scale(Putki2, (600,600))
-Putki2 = pygame.transform.rotate(Putki2, 135)
+Putki2=pygame.transform.scale(Putki2, (100,300))
+Putki2 = pygame.transform.rotate(Putki2, 140)
 
 Putki3=pygame.image.load(os.path.join("kuvat", "putki.png"))
-Putki3=pygame.transform.scale(Putki3, (600,600))
+Putki3=pygame.transform.scale(Putki3, (100,300))
 Putki3 = pygame.transform.rotate(Putki3, -45)
 
 Putki4=pygame.image.load(os.path.join("kuvat", "putki.png"))
-Putki4=pygame.transform.scale(Putki4, (600,600))
+Putki4=pygame.transform.scale(Putki4, (100,300))
 Putki4 = pygame.transform.rotate(Putki4, -135)
 
 Putki_pun=pygame.image.load(os.path.join("kuvat", "Punainen_putki.png"))
 
 
-def piirrokset(Tausta, Putki1, Putki2, Putki3, putki4):
+
+def piirrokset(Tausta, Putki1, Putki2, Putki3, Putki4, Kolmio_vihr, Kolmio_pun, Kolmio_lila, Kolmio_sin,):
       naytto.blit(Tausta,(0,0))
-      naytto.blit(Putki1,(400, 400))
-      naytto.blit(Putki2,(400, -450))
-      naytto.blit(Putki3,(-450, 400))
-      naytto.blit(Putki4,(-450,-450))
+      naytto.blit(Putki1,(650, 650))
+      naytto.blit(Putki2,(650, -150))
+      naytto.blit(Putki3,(-150, 650))
+      naytto.blit(Putki4,(-150,-150))
+      naytto.blit(Kolmio_vihr,(300,275))
+      naytto.blit(Kolmio_pun,(300,383))
+      naytto.blit(Kolmio_sin,(410,275))
+      naytto.blit(Kolmio_lila,(409,383))
       pygame.display.update()
 
 def pyorita():
@@ -79,7 +91,7 @@ def main():
       for event in pygame.event.get():
          if event.type==pygame.QUIT:
             kaynnissa=False
-      piirrokset(Tausta, Putki1, Putki2, Putki3, Putki4)
+      piirrokset(Tausta, Putki1, Putki2, Putki3, Putki4, Kolmio_vihr, Kolmio_pun, Kolmio_lila, Kolmio_sin,)
       pygame.display.update()
 main()
 pygame.quit()
