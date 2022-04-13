@@ -77,7 +77,7 @@ def piirrokset(Tausta, Putki1, Putki2, Putki3, Putki4, Kolmio_vihr, Kolmio_pun, 
 #aloitus sivun koodit
 FONT = pygame.font.SysFont ("freesansbold.ttf", 60)
 FONT2 = pygame.font.SysFont ("freesansbold.ttf", 100,)
-OTSIKKO=FONT2.render("      Pelin nimi", True, sininen)
+OTSIKKO=FONT2.render("      Pelin nimi", True, valkoinen)
 START = FONT.render("START", True, valkoinen)
 LEADERBOARD = FONT.render("LEADERBOARD", True, valkoinen)
 QUIT = FONT.render("QUIT", True, valkoinen)
@@ -111,7 +111,7 @@ def valikko(muoto, score_arvo):
                 if rect3.collidepoint(pos):
                     pygame.quit()
 
-        naytto.fill((vihrea))
+        naytto.fill((34,139,34))
 
         for teksti, rect, vari in nappaimet:
             pygame.draw.rect(naytto, vari, rect)
