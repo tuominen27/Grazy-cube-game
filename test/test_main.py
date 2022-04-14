@@ -1,5 +1,6 @@
 import unittest
 import main
+import pygame
 
 class Testit(unittest.TestCase):
 
