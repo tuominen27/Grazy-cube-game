@@ -1,22 +1,22 @@
 import pygame
 import os
-
+import random
 #määritellään värit
 valkoinen=(255, 255, 255)
 musta = (0, 0, 0)
-vihrea = (0, 255, 0)
+vihrea = (17, 79, 16)
 harmaa=(50, 50, 50) 
-punainen=(255, 0, 0) 
-vihrea=(0, 255, 0) 
-sininen=(0, 0, 255) 
+punainen=(105, 9, 9) 
+sininen=(25, 33, 126) 
 keltainen=(255, 255, 0)
+lila=(67, 13, 97)
 HOVER_COLOR = (50, 70, 90)
 
 #pelin ikkunan koko ja perus muuttujat
 LEVEYS, KORKEUS = 800, 800
 naytto = pygame.display.set_mode((LEVEYS, KORKEUS))
 pygame.display.set_caption("Nappaa pallot")
-FPS=40
+FPS=60
 kello=pygame.time.Clock()
 
 #lisätään kuvat ja fontti
@@ -27,21 +27,28 @@ Tausta=pygame.image.load(os.path.join("kuvat", "Tausta.PNG"))
 Tausta=pygame.transform.scale(Tausta, (800,800))
 
 Pallo_vihr=pygame.image.load(os.path.join("kuvat", "Vihree_pallo.png"))
+Pallo_vihr=pygame.transform.scale(Pallo_vihr,(50,50))
+
 Pallo_sin=pygame.image.load(os.path.join("kuvat", "Sininen_pallo.png"))
 Pallo_lila=pygame.image.load(os.path.join("kuvat", "lila_pallo.png"))
 Pallo_pun=pygame.image.load(os.path.join("kuvat", "punanen_pallo.png"))
 
 Kolmio_vihr=pygame.image.load(os.path.join("kuvat", "vihree.png"))
 Kolmio_vihr=pygame.transform.scale(Kolmio_vihr, (110,110))
+Kolmio_vihr_rect=pygame.Rect(345,320,60,60)
+
 
 Kolmio_sin=pygame.image.load(os.path.join("kuvat", "sininen.png"))
 Kolmio_sin=pygame.transform.scale(Kolmio_sin, (110,110))
+Kolmio_sin_rect=pygame.Rect(415,320,60,60)
 
 Kolmio_lila=pygame.image.load(os.path.join("kuvat", "lila.png"))
 Kolmio_lila=pygame.transform.scale(Kolmio_lila, (110,110))
+Kolmio_lila_rect=pygame.Rect(415,390,60,60)
 
 Kolmio_pun=pygame.image.load(os.path.join("kuvat", "punanen.png"))
 Kolmio_pun=pygame.transform.scale(Kolmio_pun, (110,110))
+Kolmio_pun_rect=pygame.Rect(345,390,60,60)
 
  
 Putki1=pygame.image.load(os.path.join("kuvat", "putki.png"))
@@ -62,7 +69,7 @@ Putki4 = pygame.transform.rotate(Putki4, -135)
 
 Putki_pun=pygame.image.load(os.path.join("kuvat", "Punainen_putki.png"))
 
-def piirrokset(Tausta, Putki1, Putki2, Putki3, Putki4, Kolmio_vihr, Kolmio_pun, Kolmio_lila, Kolmio_sin,):
+def piirrokset(Tausta,Putki1,Putki2,Putki3,Putki4,Kolmio_vihr,Kolmio_pun,Kolmio_sin,Kolmio_lila):
       naytto.blit(Tausta,(0,0))
       naytto.blit(Putki1,(650, 650))
       naytto.blit(Putki2,(650, -150))
@@ -72,7 +79,6 @@ def piirrokset(Tausta, Putki1, Putki2, Putki3, Putki4, Kolmio_vihr, Kolmio_pun, 
       naytto.blit(Kolmio_pun,(300,383))
       naytto.blit(Kolmio_sin,(410,275))
       naytto.blit(Kolmio_lila,(409,383))
-      pygame.display.update()
 
 #aloitus sivun koodit
 FONT = pygame.font.SysFont ("freesansbold.ttf", 60)
@@ -125,10 +131,37 @@ def valikko(muoto, score_arvo):
         pygame.display.flip()
         kello.tick(15)
 
+
 def nayta_score(x,y,score_arvo):
    score=font.render("Score: "+ str(score_arvo),True, (255,255,255))
    naytto.blit(score,(x,y))
    pygame.display.update()
+
+
+#pallojen funktiot ja spwanlista joka ei toimi
+Spawn_lista=[(0,0),(800,800),(800,0),(0,800)]
+def Pallo(pallo,nopeus):
+    pallo=pygame.transform.scale(pallo, (50,50))
+    pallo_rect=pallo.get_rect()
+    spawni=random.choice(Spawn_lista)
+    naytto.blit(pallo,(spawni[0],spawni[1]))
+    pygame.display.update()
+    if (spawni[0]==0) and (spawni[1]==0):
+        if pallo_rect.x<400:
+            pallo_rect.x=pallo_rect.x+nopeus
+            pallo_rect.y=pallo_rect.y+nopeus
+    if (spawni[0]==800) and (spawni[1]==800):
+        if pallo_rect.x>350:
+            pallo_rect.x=pallo_rect.x-nopeus
+            pallo_rect.y=pallo_rect.y-nopeus
+    if (spawni[0]==800) and (spawni[1]==0):
+        if pallo_rect.y>350:
+            pallo_rect.x=pallo_rect.x-nopeus
+            pallo_rect.y=pallo_rect.y-nopeus
+    if (spawni[0]==0) and (spawni[1]==800):
+        if pallo_rect.y<350:
+            pallo_rect.x=pallo_rect.x+nopeus
+            pallo_rect.y=pallo_rect.y+nopeus
 
 def putki():
     pass
@@ -140,11 +173,16 @@ def main():
       kello.tick(FPS)
       for event in pygame.event.get():
          if event.type==pygame.QUIT:
-            kaynnissa=False
-      piirrokset(Tausta, Putki1, Putki2, Putki3, Putki4, Kolmio_vihr, Kolmio_pun, Kolmio_lila, Kolmio_sin,)
+            kaynnissa=False 
+      piirrokset(Tausta,Putki1,Putki2,Putki3,Putki4,Kolmio_vihr,Kolmio_pun,Kolmio_sin,Kolmio_lila)
+      pygame.draw.rect(naytto,vihrea, Kolmio_vihr_rect)
+      pygame.draw.rect(naytto,sininen, Kolmio_sin_rect)
+      pygame.draw.rect(naytto,punainen, Kolmio_pun_rect)
+      pygame.draw.rect(naytto,lila, Kolmio_lila_rect)
       pygame.display.update()
+      #pallo=Pallo_vihr
+      #Pallo(pallo,nopeus)
       #if kusee pelin niin valikko("menu",score_arvo)
 
 valikko("aloitus", 0)
-main()
 pygame.quit()
