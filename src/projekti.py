@@ -1,4 +1,5 @@
 import pygame
+import os
 
 # Määritellään neliön koko
 leveys = 500
