@@ -1,6 +1,8 @@
 import pygame
 import os
 
+os.environ["SDL_VIDEODRIVER"] = "dummy"
+
 # Määritellään neliön koko
 leveys = 500
 korkeus = 500
