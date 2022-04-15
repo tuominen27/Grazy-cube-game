@@ -19,4 +19,4 @@ before_script:
 
 test:
   script:
-      - python unittest test/test_main.py
+      - python unittest test_main.py
