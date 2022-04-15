@@ -19,4 +19,4 @@ before_script:
 
 test:
   script:
-      - python3 test/test_main.py
+      - python3 test.test_main.py
