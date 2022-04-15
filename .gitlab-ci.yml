@@ -19,4 +19,4 @@ before_script:
 
 test:
   script:
-      - python -m unittest discover
+      - python test_main.py
