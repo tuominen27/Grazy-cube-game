@@ -4,19 +4,19 @@ import random
 #määritellään värit
 valkoinen=(255, 255, 255)
 musta = (0, 0, 0)
-vihrea = (17, 79, 16)
+vihrea = (74, 151, 72)
 harmaa=(50, 50, 50) 
-punainen=(105, 9, 9) 
-sininen=(25, 33, 126) 
+punainen=(172, 55, 55) 
+sininen=(89, 102, 186) 
 keltainen=(255, 255, 0)
-lila=(67, 13, 97)
+lila=(141, 64, 166)
 HOVER_COLOR = (50, 70, 90)
 
 #pelin ikkunan koko ja perus muuttujat
 LEVEYS, KORKEUS = 800, 800
 naytto = pygame.display.set_mode((LEVEYS, KORKEUS))
 pygame.display.set_caption("Nappaa pallot")
-FPS=50
+FPS=30
 kello=pygame.time.Clock()
 
 #lisätään kuvat ja fontti
@@ -55,20 +55,24 @@ Putki4=pygame.transform.scale(Putki4, (110,300))
 Putki4 = pygame.transform.rotate(Putki4, -134)
 
 Putki_pun=pygame.image.load(os.path.join("kuvat", "Punainen_putki.png"))
-Kolmio_pun_rect=pygame.Rect(345,390,40,40)
-Kolmio_lila_rect=pygame.Rect(415,390,40,40)
-Kolmio_sin_rect=pygame.Rect(415,320,40,40)
-Kolmio_vihr_rect=pygame.Rect(347,322,40,40)
+
+Kolmio_pun_rect=pygame.Rect(345,410,40,40)
+Kolmio_lila_rect=pygame.Rect(415,410,40,40)
+Kolmio_sin_rect=pygame.Rect(415,340,40,40)
+Kolmio_vihr_rect=pygame.Rect(347,340,40,40)
+
 kuva_lahde = pygame.image.load(os.path.join("kuvat", "neliö.png"))
-kuva_lahde=pygame.transform.scale(kuva_lahde, (310,310))
-def piirrokset(pallo,vari):
+kuva_lahde=pygame.transform.scale(kuva_lahde, (210,210))
+
+def piirrokset(pallo,vari, uusi_kuva, rect):
     naytto.blit(Tausta,(0,0))
     naytto.blit(vari,(pallo.x,pallo.y))
     naytto.blit(Putki1,(650, 650))
     naytto.blit(Putki2,(650, -150))
     naytto.blit(Putki3,(-150, 650))
     naytto.blit(Putki4,(-150,-150))
-    naytto.blit(kuva_lahde, (250, 230))
+    naytto.blit(uusi_kuva, rect)
+    pygame.display.update()
 
 #aloitus sivun koodit
 FONT = pygame.font.SysFont ("freesansbold.ttf", 60)
@@ -121,12 +125,6 @@ def valikko(muoto, score_arvo):
         pygame.display.flip()
         kello.tick(15)
 
-def havita_pallot():
-    Pallo_vihr=pygame.transform.scale(Pallo_vihr,(0,0))
-    Pallo_pun=pygame.transform.scale(Pallo_pun,(0,0))
-    Pallo_lila=pygame.transform.scale(Pallo_lila,(0,0))
-    Pallo_sin=pygame.transform.scale(Pallo_sin,(0,0))
-
 def nayta_score(x,y,score_arvo):
     score=font.render("Score: "+ str(score_arvo),True, (255,255,255))
     naytto.blit(score,(x,y))
@@ -157,6 +155,51 @@ def Pallo(pallo,nopeus,spawni):
 def putki():
     pass
 
+def collission(score_arvo, lil, puna, vihr,sini, pallo, nopeus, vari, spawni):
+        if pallo.colliderect(vihr):
+            if vari==Pallo_vihr:
+                spawni=random.choice(Spawn_lista)
+                vari=random.choice(pallo_lista)
+                pallo=pygame.Rect((spawni[0],spawni[1]),(50,50))
+                score_arvo+=1
+                if (score_arvo==1) or (score_arvo==2) or (score_arvo==4) or (score_arvo==6) or (score_arvo==8) or (score_arvo==11):
+                    nopeus+=1
+            else:
+                valikko("menu",score_arvo)
+        if pallo.colliderect(sini):
+            if vari==Pallo_sin:
+                spawni=random.choice(Spawn_lista)
+                vari=random.choice(pallo_lista)
+                pallo=pygame.Rect((spawni[0],spawni[1]),(50,50))
+                score_arvo+=1
+                if (score_arvo==1) or (score_arvo==2) or (score_arvo==4) or (score_arvo==6) or (score_arvo==8) or (score_arvo==11):
+                    nopeus+=1
+            else:
+                valikko("menu",score_arvo)
+        if pallo.colliderect(puna):
+            if vari==Pallo_pun:
+                spawni=random.choice(Spawn_lista)
+                vari=random.choice(pallo_lista)
+                pallo=pygame.Rect((spawni[0],spawni[1]),(50,50))
+                score_arvo+=1
+                if (score_arvo==1) or (score_arvo==2) or (score_arvo==4) or (score_arvo==6) or (score_arvo==8) or (score_arvo==11):
+                    nopeus+=1
+            else:
+                valikko("menu",score_arvo)
+        if pallo.colliderect(lil):
+            if vari==Pallo_lila:
+                spawni=random.choice(Spawn_lista)
+                vari=random.choice(pallo_lista)
+                pallo=pygame.Rect((spawni[0],spawni[1]),(50,50))
+                score_arvo+=1
+                if (score_arvo==1) or (score_arvo==3) or (score_arvo==6) or (score_arvo==9) or (score_arvo==12) or (score_arvo==17):
+                    nopeus+=1
+            else:
+                valikko("menu",score_arvo)
+
+
+
+
 def main():
     kaynnissa = True
     nopeus=3
@@ -166,16 +209,20 @@ def main():
     score_arvo=0
 
     kierto = 0
-
+    Pallo(pallo,nopeus,spawni)
+    nayta_score(330,10,score_arvo)
     kuva = kuva_lahde.copy()
     kuva.set_colorkey(musta)
-
+    uusi_kuva=kuva
     rect = kuva.get_rect()
     rect.center = (LEVEYS // 2, KORKEUS // 2)
-
+    naytto.blit(kuva_lahde, rect)
+    piirrokset(pallo, vari, kuva_lahde, rect)
+    pygame.display.update()
     pressed = 1
     while kaynnissa:
         kello.tick(FPS)
+        Pallo(pallo,nopeus,spawni)
         for tapahtuma in pygame.event.get():
             if tapahtuma.type==pygame.QUIT:
                 kaynnissa=False
@@ -184,40 +231,56 @@ def main():
         
         nappain = pygame.key.get_pressed()
         if nappain[pygame.K_LEFT] and pressed==1:
-            for x in range(30):
-                kierto += 3
+            if kierto==360 or kierto==-360:
+                kierto==0
+            for x in range(45):
+                kierto += 2
                 vanha_keskus = rect.center
                 uusi_kuva = pygame.transform.rotate(kuva_lahde, kierto)
                 rect = uusi_kuva.get_rect()
                 rect.center = vanha_keskus
-                naytto.blit(uusi_kuva, rect)
-                
-                pygame.display.flip()
+                naytto.blit(uusi_kuva, rect)              
+                pygame.display.update(rect)
             pressed = 2
         if nappain[pygame.K_RIGHT] and pressed==1:
-            for x in range(30):
-                kierto -= 3
+            if kierto==360 or kierto==-360:
+                kierto==0            
+            for x in range(45):
+                kierto -= 2
                 vanha_keskus = rect.center
                 uusi_kuva = pygame.transform.rotate(kuva_lahde, kierto)
                 rect = uusi_kuva.get_rect()
                 rect.center = vanha_keskus
                 naytto.blit(uusi_kuva, rect)
-                
-                pygame.display.flip()
+                pygame.display.update(rect)
             pressed=2
-    
+        Pallo(pallo,nopeus,spawni)
+        piirrokset(pallo, vari, uusi_kuva, rect)
+        nayta_score(330,10,score_arvo)
         vanha_keskus = rect.center
         uusi_kuva = pygame.transform.rotate(kuva_lahde, kierto)
         rect = uusi_kuva.get_rect()
         rect.center = vanha_keskus
-            
-        vihr=pygame.draw.rect(naytto,vihrea, Kolmio_vihr_rect)
-        sini=pygame.draw.rect(naytto,sininen, Kolmio_sin_rect)
-        puna=pygame.draw.rect(naytto,punainen, Kolmio_pun_rect)
-        lil=pygame.draw.rect(naytto,lila, Kolmio_lila_rect)
-        Pallo(pallo,nopeus,spawni)
-        piirrokset(pallo, vari)
-        nayta_score(330,10,score_arvo)
+        if kierto==0 or kierto==360 or kierto==-360:    
+            vihr=pygame.draw.rect(naytto,vihrea, Kolmio_vihr_rect)
+            sini=pygame.draw.rect(naytto,sininen, Kolmio_sin_rect)
+            puna=pygame.draw.rect(naytto,punainen, Kolmio_pun_rect)
+            lil=pygame.draw.rect(naytto,lila, Kolmio_lila_rect)
+        if kierto==-90 or kierto==270:
+            vihr=pygame.draw.rect(naytto,vihrea, Kolmio_sin_rect)
+            sini=pygame.draw.rect(naytto,sininen, Kolmio_lila_rect)
+            puna=pygame.draw.rect(naytto,punainen, Kolmio_vihr_rect)
+            lil=pygame.draw.rect(naytto,lila, Kolmio_pun_rect)        
+        if kierto==-180 or kierto==180:   
+            vihr=pygame.draw.rect(naytto,vihrea, Kolmio_lila_rect)
+            sini=pygame.draw.rect(naytto,sininen, Kolmio_pun_rect)
+            puna=pygame.draw.rect(naytto,punainen, Kolmio_sin_rect)
+            lil=pygame.draw.rect(naytto,lila, Kolmio_vihr_rect)
+        if kierto==-270 or kierto==90:   
+            vihr=pygame.draw.rect(naytto,vihrea, Kolmio_pun_rect)
+            sini=pygame.draw.rect(naytto,sininen, Kolmio_vihr_rect)
+            puna=pygame.draw.rect(naytto,punainen, Kolmio_lila_rect)
+            lil=pygame.draw.rect(naytto,lila, Kolmio_sin_rect)
         if pallo.colliderect(vihr):
             if vari==Pallo_vihr:
                 spawni=random.choice(Spawn_lista)
@@ -258,11 +321,6 @@ def main():
                     nopeus+=1
             else:
                 valikko("menu",score_arvo)
-      #if pallo.colliderect(pahis):
-         #pahis=pygame.Rect(int(random.choice(spawnlist)),int(random.choice(spawnlist)),30,30)
-         #nopeus+=0.1
-         #score_arvo+=1
-      #if kusee pelin niin valikko("menu",score_arvo)
-
+        pygame.display.update()
 valikko("aloitus", 0)
 pygame.quit()
