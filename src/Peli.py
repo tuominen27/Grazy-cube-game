@@ -16,7 +16,7 @@ HOVER_COLOR = (50, 70, 90)
 LEVEYS, KORKEUS = 800, 800
 naytto = pygame.display.set_mode((LEVEYS, KORKEUS))
 pygame.display.set_caption("Nappaa pallot")
-FPS=30
+FPS=25
 kello=pygame.time.Clock()
 
 #lisätään kuvat ja fontti
@@ -39,19 +39,19 @@ Pallo_pun=pygame.image.load(os.path.join("kuvat", "punanen_pallo.png"))
 Pallo_pun=pygame.transform.scale(Pallo_pun,(50,50))
  
 Putki1=pygame.image.load(os.path.join("kuvat", "putki.png"))
-Putki1=pygame.transform.scale(Putki1, (110,300))
+Putki1=pygame.transform.scale(Putki1, (110,200))
 Putki1 = pygame.transform.rotate(Putki1, 45)
 
 Putki2=pygame.image.load(os.path.join("kuvat", "putki.png"))
-Putki2=pygame.transform.scale(Putki2, (110,300))
+Putki2=pygame.transform.scale(Putki2, (110,200))
 Putki2 = pygame.transform.rotate(Putki2, 140)
 
 Putki3=pygame.image.load(os.path.join("kuvat", "putki.png"))
-Putki3=pygame.transform.scale(Putki3, (110,300))
+Putki3=pygame.transform.scale(Putki3, (110,200))
 Putki3 = pygame.transform.rotate(Putki3, -45)
 
 Putki4=pygame.image.load(os.path.join("kuvat", "putki.png"))
-Putki4=pygame.transform.scale(Putki4, (110,300))
+Putki4=pygame.transform.scale(Putki4, (110,200))
 Putki4 = pygame.transform.rotate(Putki4, -134)
 
 Putki_pun=pygame.image.load(os.path.join("kuvat", "Punainen_putki.png"))
@@ -152,57 +152,9 @@ def Pallo(pallo,nopeus,spawni):
             pallo.x+=nopeus
             pallo.y-=nopeus
 
-def putki():
-    pass
-
-def collission(score_arvo, lil, puna, vihr,sini, pallo, nopeus, vari, spawni):
-        if pallo.colliderect(vihr):
-            if vari==Pallo_vihr:
-                spawni=random.choice(Spawn_lista)
-                vari=random.choice(pallo_lista)
-                pallo=pygame.Rect((spawni[0],spawni[1]),(50,50))
-                score_arvo+=1
-                if (score_arvo==1) or (score_arvo==2) or (score_arvo==4) or (score_arvo==6) or (score_arvo==8) or (score_arvo==11):
-                    nopeus+=1
-            else:
-                valikko("menu",score_arvo)
-        if pallo.colliderect(sini):
-            if vari==Pallo_sin:
-                spawni=random.choice(Spawn_lista)
-                vari=random.choice(pallo_lista)
-                pallo=pygame.Rect((spawni[0],spawni[1]),(50,50))
-                score_arvo+=1
-                if (score_arvo==1) or (score_arvo==2) or (score_arvo==4) or (score_arvo==6) or (score_arvo==8) or (score_arvo==11):
-                    nopeus+=1
-            else:
-                valikko("menu",score_arvo)
-        if pallo.colliderect(puna):
-            if vari==Pallo_pun:
-                spawni=random.choice(Spawn_lista)
-                vari=random.choice(pallo_lista)
-                pallo=pygame.Rect((spawni[0],spawni[1]),(50,50))
-                score_arvo+=1
-                if (score_arvo==1) or (score_arvo==2) or (score_arvo==4) or (score_arvo==6) or (score_arvo==8) or (score_arvo==11):
-                    nopeus+=1
-            else:
-                valikko("menu",score_arvo)
-        if pallo.colliderect(lil):
-            if vari==Pallo_lila:
-                spawni=random.choice(Spawn_lista)
-                vari=random.choice(pallo_lista)
-                pallo=pygame.Rect((spawni[0],spawni[1]),(50,50))
-                score_arvo+=1
-                if (score_arvo==1) or (score_arvo==3) or (score_arvo==6) or (score_arvo==9) or (score_arvo==12) or (score_arvo==17):
-                    nopeus+=1
-            else:
-                valikko("menu",score_arvo)
-
-
-
-
 def main():
     kaynnissa = True
-    nopeus=3
+    nopeus=2
     spawni=random.choice(Spawn_lista)
     pallo=pygame.Rect((spawni[0],spawni[1]),(50,50))
     vari=random.choice(pallo_lista)
@@ -232,7 +184,7 @@ def main():
         nappain = pygame.key.get_pressed()
         if nappain[pygame.K_LEFT] and pressed==1:
             if kierto==360 or kierto==-360:
-                kierto==0
+                kierto=0
             for x in range(45):
                 kierto += 2
                 vanha_keskus = rect.center
@@ -244,7 +196,7 @@ def main():
             pressed = 2
         if nappain[pygame.K_RIGHT] and pressed==1:
             if kierto==360 or kierto==-360:
-                kierto==0            
+                kierto=0            
             for x in range(45):
                 kierto -= 2
                 vanha_keskus = rect.center
@@ -287,7 +239,7 @@ def main():
                 vari=random.choice(pallo_lista)
                 pallo=pygame.Rect((spawni[0],spawni[1]),(50,50))
                 score_arvo+=1
-                if (score_arvo==1) or (score_arvo==2) or (score_arvo==4) or (score_arvo==6) or (score_arvo==8) or (score_arvo==11):
+                if (score_arvo==1) or (score_arvo==5) or (score_arvo==10):
                     nopeus+=1
             else:
                 valikko("menu",score_arvo)
@@ -297,7 +249,7 @@ def main():
                 vari=random.choice(pallo_lista)
                 pallo=pygame.Rect((spawni[0],spawni[1]),(50,50))
                 score_arvo+=1
-                if (score_arvo==1) or (score_arvo==2) or (score_arvo==4) or (score_arvo==6) or (score_arvo==8) or (score_arvo==11):
+                if (score_arvo==1) or (score_arvo==5) or (score_arvo==10):
                     nopeus+=1
             else:
                 valikko("menu",score_arvo)
@@ -307,7 +259,7 @@ def main():
                 vari=random.choice(pallo_lista)
                 pallo=pygame.Rect((spawni[0],spawni[1]),(50,50))
                 score_arvo+=1
-                if (score_arvo==1) or (score_arvo==2) or (score_arvo==4) or (score_arvo==6) or (score_arvo==8) or (score_arvo==11):
+                if (score_arvo==1) or (score_arvo==5) or (score_arvo==10):
                     nopeus+=1
             else:
                 valikko("menu",score_arvo)
@@ -317,7 +269,7 @@ def main():
                 vari=random.choice(pallo_lista)
                 pallo=pygame.Rect((spawni[0],spawni[1]),(50,50))
                 score_arvo+=1
-                if (score_arvo==1) or (score_arvo==2) or (score_arvo==4) or (score_arvo==6) or (score_arvo==8) or (score_arvo==11):
+                if (score_arvo==1) or (score_arvo==5) or (score_arvo==10):
                     nopeus+=1
             else:
                 valikko("menu",score_arvo)
