@@ -1,5 +1,5 @@
 import unittest
-from Peli import main
+import Peli
 
 class Testit(unittest.TestCase):
 
