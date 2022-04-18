@@ -1,25 +1,28 @@
 image: python:latest
 
-variables:
-  PIP_CACHE_DIR: "$CI_PROJECT_DIR/.cache/pip"
+stages:
+  - build
+  - test
 
-cache:
-  paths:
-    - .cache/pip
-    - venv/
+build: 
+  stage: build
+  script: src/Peli.py
+  artifacts:
+    paths:
+      - Peli.*
 
-before_script:
-  - python3 -V
-  - pip3 install virtualenv
-  - virtualenv venv
-  - source venv/bin/activate
-  - pip3 install requests
-  - pip3 install python-dotenv
-  - pip3 install pygame
-  - pip install mypy
-
-test:
+Type-test:
+  stage: test
+  image: python:latest
   script:
-      - echo "ei testejä"
-      - mypy src
+    - pip3 install mypy
+    - mypy src
+  allow_failure: true
 
+Lint-test:
+  stage: test
+  image: python:latest
+  script:
+    - pip3 install flake8
+    - flake8
+  allow_failure: true
