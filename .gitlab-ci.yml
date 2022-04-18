@@ -17,6 +17,6 @@ before_script:
   - pip3 install python-dotenv
   - pip3 install pygame
 
-#test:
-#  script:
-#      - python -m unittest test_main.py
+test:
+  script:
+      - echo "ei testejä"
