@@ -1,31 +1,24 @@
 image: python:latest
 
-stages:
-  - build
-  - test
+variables:
+  PIP_CACHE_DIR: "$CI_PROJECT_DIR/.cache/pip"
 
-build:
-  stage: build
-  variables:
-    PIP_CACHE_DIR: "$CI_PROJECT_DIR/.cache/pip"
+cache:
+  paths:
+    - .cache/pip
+    - venv/
 
-  cache:
-    paths:
-      - .cache/pip
-      - venv/
-
-  before_script:
-    - python3 -V
-    - pip3 install virtualenv
-    - virtualenv venv
-    - source venv/bin/activate
-    - pip3 install requests
-    - pip3 install python-dotenv
-    - pip3 install pygame
-    - pip install mypy
+before_script:
+  - python3 -V
+  - pip3 install virtualenv
+  - virtualenv venv
+  - source venv/bin/activate
+  - pip3 install requests
+  - pip3 install python-dotenv
+  - pip3 install pygame
+  - pip install mypy
 
 test:
-  stage: test
   script:
-      - echo "Ei yksikkötestejä"
+      - echo "ei yksikkötestejä"
       - mypy src
