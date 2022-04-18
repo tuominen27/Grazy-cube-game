@@ -16,7 +16,12 @@ before_script:
   - pip3 install requests
   - pip3 install python-dotenv
   - pip3 install pygame
+  - pip install mypy
+  - pip install flake8
 
 test:
   script:
       - echo "ei testejä"
+      - mypy scr
+      - flake8
+  allow failure: true
