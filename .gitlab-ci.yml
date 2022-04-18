@@ -3,17 +3,6 @@ image: python:latest
 variables:
   PIP_CACHE_DIR: "$CI_PROJECT_DIR/.cache/pip"
 
-
-#uusi
-include:
-  - template: Code-Quality.gitlab-ci.yml
-
-code_quality:
-  stage: test
-  variables:
-    CODE_QUALITY_IMAGE: "registry.example.com/codequality-fork:latest"
-#uusi
-
 cache:
   paths:
     - .cache/pip
