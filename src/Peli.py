@@ -1,8 +1,13 @@
+#Ohjelman kirjastot
+
+from numpy import unicode_
 import pygame
 import os
 import random
 
-#määritellään värit
+
+#Määritellään värit
+
 valkoinen=(255, 255, 255)
 musta = (0, 0, 0)
 vihrea = (74, 151, 72)
@@ -13,14 +18,18 @@ keltainen=(255, 255, 0)
 lila=(141, 64, 166)
 HOVER_COLOR = (50, 70, 90)
 
-#pelin ikkunan koko ja perus muuttujat
+
+#Pelin ikkunan koko ja perusmuuttujat
+
 LEVEYS, KORKEUS = 800, 800
 naytto = pygame.display.set_mode((LEVEYS, KORKEUS))
 pygame.display.set_caption("Nappaa pallot")
 FPS=30
 kello=pygame.time.Clock()
 
-#lisätään kuvat ja fontti
+
+#Lisätään kuvat ja fontti
+
 pygame.init()
 font=pygame.font.Font("freesansbold.ttf",32)
 
@@ -75,10 +84,12 @@ def piirrokset(pallo,vari, uusi_kuva, rect):
     naytto.blit(uusi_kuva, rect)
     pygame.display.update()
 
-#aloitus sivun koodit
+
+#Aloitussivun koodit
+
 FONT = pygame.font.SysFont ("freesansbold.ttf", 60)
 FONT2 = pygame.font.SysFont ("freesansbold.ttf", 100,)
-OTSIKKO=FONT2.render("     CrazyCube", True, valkoinen)
+OTSIKKO=FONT2.render("      Pelin nimi", True, valkoinen)
 START = FONT.render("START", True, valkoinen)
 LEADERBOARD = FONT.render("LEADERBOARD", True, valkoinen)
 QUIT = FONT.render("BACK", True, valkoinen)
@@ -101,10 +112,13 @@ nappaimet = [
     ]
 
 
+#Funktio hakee parhaan scoren tiedostosta tulokset.txt
+
 def hae_paras_score():
     with open("src/tulokset.txt") as tiedosto:
         paras_score = int(tiedosto.read())
     return paras_score
+
 
 
 def leaderboard():
@@ -162,13 +176,16 @@ def valikko(muoto, score_arvo):
         kello.tick(15)
 
 
+#Näyttää scoren pelissä
+
 def nayta_score(x,y,score_arvo):
     score=font.render("Score: "+ str(score_arvo),True, (255,255,255))
     naytto.blit(score,(x,y))
     pygame.display.update()
 
 
-#pallojen funktiot ja spwanlista joka ei toimi
+#Pallojen määrittely
+
 Spawn_lista=[(20,0),(790,780),(750,0),(0,750)]
 pallo_lista=[Pallo_lila,Pallo_pun,Pallo_sin,Pallo_vihr,]
 def Pallo(pallo,nopeus,spawni):
@@ -189,7 +206,12 @@ def Pallo(pallo,nopeus,spawni):
             pallo.x+=nopeus
             pallo.y-=nopeus
 
+
+#Ohjelman pääfunktio
+
 def main():
+
+    #Määritellään muuttujia
     kaynnissa = True
     nopeus=2
     spawni=random.choice(Spawn_lista)
@@ -197,7 +219,6 @@ def main():
     vari=random.choice(pallo_lista)
     score_arvo=0
     score_paras = hae_paras_score()
-
     kierto = 0
     Pallo(pallo,nopeus,spawni)
     nayta_score(330,10,score_arvo)
@@ -210,6 +231,7 @@ def main():
     piirrokset(pallo, vari, kuva_lahde, rect)
     pygame.display.update()
     pressed = 1
+
     while kaynnissa:
         kello.tick(FPS)
         Pallo(pallo,nopeus,spawni)
@@ -232,6 +254,7 @@ def main():
                 naytto.blit(uusi_kuva, rect)              
                 pygame.display.update(rect)
             pressed = 2
+
         if nappain[pygame.K_RIGHT] and pressed==1:
             if kierto==360 or kierto==-360:
                 kierto=0            
@@ -244,6 +267,7 @@ def main():
                 naytto.blit(uusi_kuva, rect)
                 pygame.display.update(rect)
             pressed=2
+
         Pallo(pallo,nopeus,spawni)
         piirrokset(pallo, vari, uusi_kuva, rect)
         nayta_score(330,10,score_arvo)
@@ -251,6 +275,7 @@ def main():
         uusi_kuva = pygame.transform.rotate(kuva_lahde, kierto)
         rect = uusi_kuva.get_rect()
         rect.center = vanha_keskus
+
         if kierto==0 or kierto==360 or kierto==-360:    
             vihr=pygame.draw.rect(naytto,vihrea, Kolmio_vihr_rect)
             sini=pygame.draw.rect(naytto,sininen, Kolmio_sin_rect)
@@ -291,6 +316,7 @@ def main():
                     nopeus+=1
             else:
                 valikko("menu",score_arvo)
+
         if pallo.colliderect(puna):
             if vari==Pallo_pun:
                 spawni=random.choice(Spawn_lista)
@@ -301,6 +327,7 @@ def main():
                     nopeus+=1
             else:
                 valikko("menu",score_arvo)
+                
         if pallo.colliderect(lil):
             if vari==Pallo_lila:
                 spawni=random.choice(Spawn_lista)
