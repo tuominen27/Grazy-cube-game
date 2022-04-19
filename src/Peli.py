@@ -88,7 +88,7 @@ def piirrokset(pallo,vari, uusi_kuva, rect):
 
 FONT = pygame.font.SysFont ("freesansbold.ttf", 60)
 FONT2 = pygame.font.SysFont ("freesansbold.ttf", 100,)
-OTSIKKO=FONT2.render("      Pelin nimi", True, valkoinen)
+OTSIKKO=FONT2.render("      CrazyCube", True, valkoinen)
 START = FONT.render("START", True, valkoinen)
 LEADERBOARD = FONT.render("LEADERBOARD", True, valkoinen)
 QUIT = FONT.render("BACK", True, valkoinen)
