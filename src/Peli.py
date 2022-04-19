@@ -23,7 +23,7 @@ HOVER_COLOR = (50, 70, 90)
 LEVEYS, KORKEUS = 800, 800
 naytto = pygame.display.set_mode((LEVEYS, KORKEUS))
 pygame.display.set_caption("Nappaa pallot")
-FPS=30
+FPS=60
 kello=pygame.time.Clock()
 
 
@@ -192,15 +192,15 @@ def Pallo(pallo,nopeus,spawni):
         if pallo.x<400:
             pallo.x+=nopeus
             pallo.y+=nopeus
-    if (spawni[0]==790) and (spawni[1]==780):
+    elif (spawni[0]==790) and (spawni[1]==780):
         if pallo.x>350:
             pallo.x-=nopeus
             pallo.y-=nopeus
-    if (spawni[0]==750) and (spawni[1]==0):
+    elif (spawni[0]==750) and (spawni[1]==0):
         if pallo.x>350:
             pallo.x-=nopeus
             pallo.y+=nopeus
-    if (spawni[0]==0) and (spawni[1]==750):
+    elif (spawni[0]==0) and (spawni[1]==750):
         if pallo.y>350:
             pallo.x+=nopeus
             pallo.y-=nopeus
@@ -212,7 +212,7 @@ def main():
 
     #Määritellään muuttujia
     kaynnissa = True
-    nopeus=2
+    nopeus=1
     spawni=random.choice(Spawn_lista)
     pallo=pygame.Rect((spawni[0],spawni[1]),(50,50))
     vari=random.choice(pallo_lista)
@@ -295,23 +295,25 @@ def main():
             sini=pygame.draw.rect(naytto,sininen, Kolmio_vihr_rect)
             puna=pygame.draw.rect(naytto,punainen, Kolmio_lila_rect)
             lil=pygame.draw.rect(naytto,lila, Kolmio_sin_rect)
+            
         if pallo.colliderect(vihr):
             if vari==Pallo_vihr:
                 spawni=random.choice(Spawn_lista)
                 vari=random.choice(pallo_lista)
                 pallo=pygame.Rect((spawni[0],spawni[1]),(50,50))
                 score_arvo+=1
-                if (score_arvo==1) or (score_arvo==5) or (score_arvo==10):
+                if (score_arvo==5) or (score_arvo==10) or (score_arvo==20):
                     nopeus+=1
             else:
                 valikko("menu",score_arvo)
+
         if pallo.colliderect(sini):
             if vari==Pallo_sin:
                 spawni=random.choice(Spawn_lista)
                 vari=random.choice(pallo_lista)
                 pallo=pygame.Rect((spawni[0],spawni[1]),(50,50))
                 score_arvo+=1
-                if (score_arvo==1) or (score_arvo==5) or (score_arvo==10):
+                if (score_arvo==5) or (score_arvo==10) or (score_arvo==20):
                     nopeus+=1
             else:
                 valikko("menu",score_arvo)
@@ -322,7 +324,7 @@ def main():
                 vari=random.choice(pallo_lista)
                 pallo=pygame.Rect((spawni[0],spawni[1]),(50,50))
                 score_arvo+=1
-                if (score_arvo==1) or (score_arvo==5) or (score_arvo==10):
+                if (score_arvo==5) or (score_arvo==10) or (score_arvo==20):
                     nopeus+=1
             else:
                 valikko("menu",score_arvo)
@@ -333,7 +335,7 @@ def main():
                 vari=random.choice(pallo_lista)
                 pallo=pygame.Rect((spawni[0],spawni[1]),(50,50))
                 score_arvo+=1
-                if (score_arvo==1) or (score_arvo==5) or (score_arvo==10):
+                if (score_arvo==5) or (score_arvo==10) or (score_arvo==20):
                     nopeus+=1
             else:
                 valikko("menu",score_arvo)
