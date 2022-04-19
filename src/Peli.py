@@ -1,6 +1,5 @@
 #Ohjelman kirjastot
 
-from numpy import unicode_
 import pygame
 import os
 import random
