@@ -16,7 +16,7 @@ HOVER_COLOR = (50, 70, 90)
 LEVEYS, KORKEUS = 800, 800
 naytto = pygame.display.set_mode((LEVEYS, KORKEUS))
 pygame.display.set_caption("Nappaa pallot")
-FPS=25
+FPS=30
 kello=pygame.time.Clock()
 
 #lisätään kuvat ja fontti
@@ -80,15 +80,44 @@ FONT2 = pygame.font.SysFont ("freesansbold.ttf", 100,)
 OTSIKKO=FONT2.render("      Pelin nimi", True, valkoinen)
 START = FONT.render("START", True, valkoinen)
 LEADERBOARD = FONT.render("LEADERBOARD", True, valkoinen)
-QUIT = FONT.render("QUIT", True, valkoinen)
+QUIT = FONT.render("BACK", True, valkoinen)
+MENU = FONT.render("BACK", True, valkoinen)
+
 rect_otsikko=pygame.Rect(130,100,600,60)
 rect1 = pygame.Rect(248,300,325,80)
 rect2 = pygame.Rect(248,400,325,80)
 rect3 = pygame.Rect(248,500,325,80)
+rect4 = pygame.Rect(248,500,325,80)
+
 nappaimet = [
     [START, rect1, musta],
     [LEADERBOARD, rect2, musta],
-    [QUIT, rect3, musta],]
+    [QUIT, rect3, musta],
+    [MENU, rect4, musta]
+    ]
+
+def paivita_paras_score():
+    with open("tulokset.txt") as tiedosto:
+        paras_score = int(tiedosto.read())
+
+
+def leaderboard():
+
+    naytto.blit(Tausta,(0,0))
+    pygame.draw.rect(naytto, musta, rect4)
+    naytto.blit(MENU,rect4)
+    pygame.display.update()
+
+    while True:
+        for event in pygame.event.get():
+            if event.type == pygame.QUIT:
+                return
+            if event.type == pygame.MOUSEBUTTONUP:
+                pos = pygame.mouse.get_pos()
+                if rect4.collidepoint(pos):
+                    valikko("aloitus", 0)
+
+
 
 def valikko(muoto, score_arvo):
     while True:
@@ -107,7 +136,7 @@ def valikko(muoto, score_arvo):
                 if rect1.collidepoint(pos):
                     main()
                 if rect2.collidepoint(pos):
-                    print("Eipä ollutkaan")
+                    leaderboard()
                 if rect3.collidepoint(pos):
                     pygame.quit()
 
@@ -124,6 +153,7 @@ def valikko(muoto, score_arvo):
 
         pygame.display.flip()
         kello.tick(15)
+
 
 def nayta_score(x,y,score_arvo):
     score=font.render("Score: "+ str(score_arvo),True, (255,255,255))
