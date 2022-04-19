@@ -1,6 +1,8 @@
+from numpy import unicode_
 import pygame
 import os
 import random
+
 #määritellään värit
 valkoinen=(255, 255, 255)
 musta = (0, 0, 0)
@@ -67,10 +69,10 @@ kuva_lahde=pygame.transform.scale(kuva_lahde, (210,210))
 def piirrokset(pallo,vari, uusi_kuva, rect):
     naytto.blit(Tausta,(0,0))
     naytto.blit(vari,(pallo.x,pallo.y))
-    naytto.blit(Putki1,(650, 650))
-    naytto.blit(Putki2,(650, -150))
-    naytto.blit(Putki3,(-150, 650))
-    naytto.blit(Putki4,(-150,-150))
+    naytto.blit(Putki1,(700, 700))
+    naytto.blit(Putki2,(690, -120))
+    naytto.blit(Putki3,(-120, 690))
+    naytto.blit(Putki4,(-120,-120))
     naytto.blit(uusi_kuva, rect)
     pygame.display.update()
 
@@ -82,30 +84,37 @@ START = FONT.render("START", True, valkoinen)
 LEADERBOARD = FONT.render("LEADERBOARD", True, valkoinen)
 QUIT = FONT.render("BACK", True, valkoinen)
 MENU = FONT.render("BACK", True, valkoinen)
+PARAS = FONT.render("PARAS TULOS:", True, valkoinen)
 
 rect_otsikko=pygame.Rect(130,100,600,60)
 rect1 = pygame.Rect(248,300,325,80)
 rect2 = pygame.Rect(248,400,325,80)
 rect3 = pygame.Rect(248,500,325,80)
 rect4 = pygame.Rect(248,500,325,80)
+rect5 = pygame.Rect(130,100,600,60)
+rect6 = pygame.Rect(248,300,325,80)
 
 nappaimet = [
     [START, rect1, musta],
     [LEADERBOARD, rect2, musta],
     [QUIT, rect3, musta],
-    [MENU, rect4, musta]
+    [MENU, rect4, musta],
     ]
 
-def paivita_paras_score():
-    with open("tulokset.txt") as tiedosto:
+
+def hae_paras_score():
+    with open("src/tulokset.txt") as tiedosto:
         paras_score = int(tiedosto.read())
+    return paras_score
 
 
 def leaderboard():
-
+    TULOS = FONT.render(str(hae_paras_score()), True, valkoinen)
     naytto.blit(Tausta,(0,0))
     pygame.draw.rect(naytto, musta, rect4)
-    naytto.blit(MENU,rect4)
+    naytto.blit(MENU, rect4)
+    naytto.blit(PARAS, rect5)
+    naytto.blit(TULOS, rect6)
     pygame.display.update()
 
     while True:
@@ -116,7 +125,6 @@ def leaderboard():
                 pos = pygame.mouse.get_pos()
                 if rect4.collidepoint(pos):
                     valikko("aloitus", 0)
-
 
 
 def valikko(muoto, score_arvo):
@@ -189,6 +197,7 @@ def main():
     pallo=pygame.Rect((spawni[0],spawni[1]),(50,50))
     vari=random.choice(pallo_lista)
     score_arvo=0
+    score_paras = hae_paras_score()
 
     kierto = 0
     Pallo(pallo,nopeus,spawni)
@@ -304,5 +313,10 @@ def main():
             else:
                 valikko("menu",score_arvo)
         pygame.display.update()
+
+        if score_paras < score_arvo:
+            with open("src/tulokset.txt", "w") as tiedosto:
+                tiedosto.write(str(score_arvo))
+
 valikko("aloitus", 0)
 pygame.quit()
