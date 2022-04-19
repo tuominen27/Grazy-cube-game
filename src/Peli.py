@@ -22,7 +22,7 @@ HOVER_COLOR = (50, 70, 90)
 
 LEVEYS, KORKEUS = 800, 800
 naytto = pygame.display.set_mode((LEVEYS, KORKEUS))
-pygame.display.set_caption("Nappaa pallot")
+pygame.display.set_caption("CrazyCube")
 FPS=60
 kello=pygame.time.Clock()
 
