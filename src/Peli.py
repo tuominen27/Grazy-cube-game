@@ -6,7 +6,7 @@ import random
 
 
 #Määritellään värit
-
+antti = 0
 valkoinen=(255, 255, 255)
 musta = (0, 0, 0)
 vihrea = (74, 151, 72)
@@ -23,7 +23,7 @@ HOVER_COLOR = (50, 70, 90)
 LEVEYS, KORKEUS = 800, 800
 naytto = pygame.display.set_mode((LEVEYS, KORKEUS))
 pygame.display.set_caption("CrazyCube")
-FPS=60
+FPS=50
 kello=pygame.time.Clock()
 
 
@@ -88,12 +88,13 @@ def piirrokset(pallo,vari, uusi_kuva, rect):
 
 FONT = pygame.font.SysFont ("freesansbold.ttf", 60)
 FONT2 = pygame.font.SysFont ("freesansbold.ttf", 100,)
+FONT3 = pygame.font.SysFont ("freesansbold.ttf", 150,)
 OTSIKKO=FONT2.render("      CrazyCube", True, valkoinen)
 START = FONT.render("START", True, valkoinen)
 LEADERBOARD = FONT.render("LEADERBOARD", True, valkoinen)
 QUIT = FONT.render("BACK", True, valkoinen)
 MENU = FONT.render("BACK", True, valkoinen)
-PARAS = FONT.render("PARAS TULOS:", True, valkoinen)
+PARAS = FONT2.render("PARAS TULOS:", True, valkoinen)
 
 rect_otsikko=pygame.Rect(130,100,600,60)
 rect1 = pygame.Rect(248,300,325,80)
@@ -101,7 +102,7 @@ rect2 = pygame.Rect(248,400,325,80)
 rect3 = pygame.Rect(248,500,325,80)
 rect4 = pygame.Rect(248,500,325,80)
 rect5 = pygame.Rect(130,100,600,60)
-rect6 = pygame.Rect(248,300,325,80)
+rect6 = pygame.Rect(335,250,325,80)
 
 nappaimet = [
     [START, rect1, musta],
@@ -121,7 +122,7 @@ def hae_paras_score():
 
 
 def leaderboard():
-    TULOS = FONT.render(str(hae_paras_score()), True, valkoinen)
+    TULOS = FONT3.render(str(hae_paras_score()), True, valkoinen)
     naytto.blit(Tausta,(0,0))
     pygame.draw.rect(naytto, musta, rect4)
     naytto.blit(MENU, rect4)
