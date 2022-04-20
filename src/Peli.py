@@ -6,7 +6,6 @@ import random
 
 
 #Määritellään värit
-antti = 0
 valkoinen=(255, 255, 255)
 musta = (0, 0, 0)
 vihrea = (74, 151, 72)
