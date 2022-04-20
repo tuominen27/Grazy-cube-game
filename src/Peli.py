@@ -160,7 +160,7 @@ def valikko(muoto, score_arvo):
                 if rect3.collidepoint(pos):
                     pygame.quit()
 
-        naytto.fill((34,139,34))
+        naytto.blit(Tausta, (0, 0))
 
         for teksti, rect, vari in nappaimet:
             pygame.draw.rect(naytto, vari, rect)
