@@ -1,6 +1,6 @@
 from src.Peli import hae_paras_score
 import unittest
-
+import pygame
 
 class Testit(unittest.TestCase):
     
