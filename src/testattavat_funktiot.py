@@ -1,1 +1,1 @@
-from Peli import hae_paras_score
+from src.Peli import hae_paras_score
