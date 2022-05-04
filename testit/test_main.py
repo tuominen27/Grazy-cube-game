@@ -3,7 +3,7 @@ import unittest
 
 class Testit(unittest.TestCase):
     
-    def hae_paras_score_test(self):
+    def test_hae_paras_score(self):
         testiarvo = 17
         with open("src/tulokset.txt", "w") as tiedosto:
             tiedosto.write(str(testiarvo))
