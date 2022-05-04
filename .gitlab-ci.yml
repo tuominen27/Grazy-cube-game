@@ -1,6 +1,5 @@
 image: python:latest
 
-
 variables:
   PIP_CACHE_DIR: "$CI_PROJECT_DIR/.cache/pip"
 
@@ -12,7 +11,6 @@ cache:
 before_script:
   - python --version
   - pip install virtualenv
-  - pip install pygame
   - virtualenv venv
   - source venv/bin/activate
 
