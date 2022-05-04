@@ -3,6 +3,7 @@
 import pygame
 import os
 import random
+from hae_paras_score import hae_paras_score
 
 
 #Määritellään värit
@@ -109,14 +110,6 @@ nappaimet = [
     [QUIT, rect3, musta],
     [MENU, rect4, musta],
     ]
-
-
-#Funktio hakee parhaan scoren tiedostosta tulokset.txt
-
-def hae_paras_score():
-    with open("src/tulokset.txt") as tiedosto:
-        paras_score = int(tiedosto.read())
-    return paras_score
 
 
 

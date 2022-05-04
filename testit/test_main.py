@@ -1,4 +1,4 @@
-from src.Peli import hae_paras_score
+from src.hae_paras_score import hae_paras_score
 import unittest
 import pygame
 
