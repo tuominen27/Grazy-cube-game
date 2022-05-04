@@ -1,6 +1,5 @@
 from src.hae_paras_score import hae_paras_score
 import unittest
-import pygame
 
 class Testit(unittest.TestCase):
     
